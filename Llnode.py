@@ -133,6 +133,45 @@ class LList(object):
             p = p.next
 
 
+class LinkListHaveRear(LList):
+    def __init__(self):
+        super(LinkListHaveRear, self).__init__()
+        self._rear = None
+
+    def prepend(self, val):
+        # 判断空表
+        if self._head is None:
+            self._head = LNode(val, self._head)
+            self._rear = self._head
+        else:
+            self._head = LNode(val, self._head)
+
+    def append(self, val):
+        # 判断空表
+        if self._head is None:
+            self._head = LNode(val, self._head)
+            self._rear = self._head
+        else:
+            self._rear.next = LNode(val)
+            self._rear = self._rear.next
+
+    def pop_last(self):
+        # 判断空表
+        if self._head is None:
+            raise LinkedListUnderflow('in pop_last')
+        p = self._head
+        # 判断表中只有一个元素的情况
+        if p.next is None:
+            e = p.val
+            self._head = None
+            return e
+        while p.next.next is not None:
+            p = p.next
+        e = p.next.val
+        p.next = None
+        return e
+
+
 if __name__ == '__main__':
     mlist_1 = LList()
     for i in range(10):
@@ -148,7 +187,6 @@ if __name__ == '__main__':
     # print(r)
     mlist_1.printall()
 
-
     # 遍历操作测试
     # mlist_1.for_each(lambda x: print(f'val is {x}'))
     # 生成器测试
@@ -161,3 +199,8 @@ if __name__ == '__main__':
     # find_all 测试
     # r = mlist_1.find_all(lambda x: x % 2 == 0)
     # print(list(r))
+    mlist_2 = LinkListHaveRear()
+    mlist_2.prepend(100)
+    for i in range(10):
+        mlist_2.append(i)
+    mlist_2.printall()
