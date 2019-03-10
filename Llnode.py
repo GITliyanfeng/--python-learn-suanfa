@@ -108,6 +108,30 @@ class LList(object):
         # 循环结束输出换行
         print('')
 
+    # 链表的遍历操作 ,proc是一个针对表内所有节点的值的操作
+    # 例如 lambda x: print(f'val is {x}')
+    def for_each(self, proc):
+        p = self._head
+        while p is not None:
+            proc(p.val)
+            p = p.next
+
+    def values(self):
+        # 生成器的方式返回链表中的值
+        p = self._head
+        while p is not None:
+            yield p.val
+            p = p.next
+
+    def find_all(self, pred):
+        # 遍历筛选,返回生成器
+        p = self._head
+        while p is not None:
+            if pred(p.val):
+                print(p.val)
+                yield p.val
+            p = p.next
+
 
 if __name__ == '__main__':
     mlist_1 = LList()
@@ -117,9 +141,23 @@ if __name__ == '__main__':
     for i in range(11, 20):
         # 尾端插入
         mlist_1.append(i)
-    # 打印
+    # 打印 方法测试
     # mlist_1.pop_last()
     # mlist_1.pop()
     # r = mlist_1.find(lambda x: x == 14)
     # print(r)
     mlist_1.printall()
+
+
+    # 遍历操作测试
+    # mlist_1.for_each(lambda x: print(f'val is {x}'))
+    # 生成器测试
+    # r = mlist_1.values()
+    # print(next(r))
+    # print(next(r))
+    # print(next(r))
+    # r = [ i for i in mlist_1.values()]
+    # print(r)
+    # find_all 测试
+    # r = mlist_1.find_all(lambda x: x % 2 == 0)
+    # print(list(r))
