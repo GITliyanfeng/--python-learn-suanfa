@@ -170,6 +170,28 @@ class LList(object):
             cur = cur.next
             # 每调换一次顺序,p指针滚回为首指针,重新扫描
 
+    def sort_insert_2(self):
+        """第二种插入排序,1是改变值,2是将乱序的节点拆下来,放到有序的节点中"""
+        p = self._head  # 获取当前节点
+        if p is None or p.next is None:
+            # 如果是空表或者只有一个元素,那么本来就是有序的
+            return
+        rem = p.next
+        p.next = None
+        while rem is not None:
+            p = self._head
+            q = None
+            while p is not None and p.val <= rem.val:
+                q = p
+                p = p.next
+                if q is None:
+                    self._head = rem
+                else:
+                    q.next = rem
+                q = rem
+                rem = rem.next
+                q.next = p
+
 
 # 具有头节点指向尾节点的链表 (变形一)
 class LinkListHaveRear(LList):
@@ -337,5 +359,6 @@ if __name__ == '__main__':
     ms_1.append(4)
     ms_1.append(3)
     ms_1.printall()
-    ms_1.sort_insert_1()
+    # ms_1.sort_insert_1()
+    ms_1.sort_insert_2()
     ms_1.printall()
