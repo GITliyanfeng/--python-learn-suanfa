@@ -56,15 +56,17 @@ class LList(object):
 
     # 后端插入
     def append(self, val):
+        newNode = LNode(val)
         if self._head is None:
             # 空链表生成新的节点
-            self._head = LNode(val)
+            self._head = newNode
+            return
         p = self._head
         # 循环遍历到整个链表的末尾
         while p.next is not None:
             p = p.next
         # 在末尾节点添加一个新的节点
-        p.next = LNode(val)
+        p.next = newNode
 
     def pop_last(self):
         if self._head is None:
@@ -132,6 +134,19 @@ class LList(object):
                 yield p.val
             p = p.next
 
+    def rev(self):
+        # 反转,意味着将旧的链表从头到尾拿出来,形成一个新的链表
+        p = None
+        while self._head is not None:  # 只要当前节点不为空
+            q = self._head  # 获取当前节点
+            # 将当前节点设置成为下一个节点
+            self._head = q.next
+            # 将取出的原头节点的下一节点设置成p
+            q.next = p
+            # 将操作完成的q赋值给p
+            p = q
+        self._head = p
+
 
 # 具有头节点指向尾节点的链表 (变形一)
 class LinkListHaveRear(LList):
@@ -148,13 +163,14 @@ class LinkListHaveRear(LList):
             self._head = LNode(val, self._head)
 
     def append(self, val):
+        newNode = LNode(val)
         # 判断空表
         if self._head is None:
-            self._head = LNode(val, self._head)
+            self._head = newNode
             self._rear = self._head
         else:
-            self._rear.next = LNode(val)
-            self._rear = self._rear.next
+            self._rear.next = newNode
+            self._rear = newNode
 
     def pop_last(self):
         # 判断空表
@@ -244,7 +260,7 @@ class CircleLinkList(object):
                 print('')
                 break
             p = p.next
-            print('->',end='')
+            print('->', end='')
 
 
 if __name__ == '__main__':
@@ -280,13 +296,21 @@ if __name__ == '__main__':
     #     mlist_2.append(i)
     # mlist_2.printall()
 
-    mlist_3 = CircleLinkList()
-    mlist_3.prepend(5),
-    mlist_3.prepend(4)
+    # mlist_3 = CircleLinkList()
+    # mlist_3.prepend(5),
+    # mlist_3.prepend(4)
     # mlist_3.printall()
-    for i in range(6, 10):
-        mlist_3.append(i)
-    mlist_3.printall()
+    # for i in range(6, 10):
+    #     mlist_3.append(i)
+    # mlist_3.printall()
     # mlist_3.pop()
     # mlist_3.pop_last()
-    mlist_3.printall()
+    # mlist_3.printall()
+    ms_1 = LList()
+    ms_1.printall()
+    ms_1.append(1)
+    ms_1.append(2)
+    ms_1.append(3)
+    ms_1.printall()
+    ms_1.rev()
+    ms_1.printall()
