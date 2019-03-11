@@ -147,6 +147,29 @@ class LList(object):
             p = q
         self._head = p
 
+    def sort_insert_1(self):
+        """定义经典单链表的排序方式"""
+        if self._head is None:  # 空表
+            return
+            # 取当前节点的下一节点为cur
+        cur = self._head.next
+        while cur is not None:  # 以cur非空为条件进行循环
+            x = cur.val  # 将cur的值赋给x [对于p来说,是下一节点的值赋值给x]
+            p = self._head  # 将当前节点赋给p
+            print('p-self.header', p.val)
+            while p is not cur and p.val <= x:  # 以p为非cur并且p的值<=x[下一节点的值]为条件循环   目的是跳过正常顺序的元素
+                # p指针后移
+                p = p.next
+            # 如果不满足上述条件,那么意味着前者比后者大
+            while p is not cur:  # 以p不是cur为条件进行循环   调整元素位置
+                y = p.val  # 获取此时p的值
+                p.val = x  # 将小的值x赋值到p的val上
+                x = y  # 将大的值赋值给x  以新x进入判断
+                p = p.next
+            cur.val = x
+            cur = cur.next
+            # 每调换一次顺序,p指针滚回为首指针,重新扫描
+
 
 # 具有头节点指向尾节点的链表 (变形一)
 class LinkListHaveRear(LList):
@@ -310,7 +333,9 @@ if __name__ == '__main__':
     ms_1.printall()
     ms_1.append(1)
     ms_1.append(2)
+    ms_1.append(5)
+    ms_1.append(4)
     ms_1.append(3)
     ms_1.printall()
-    ms_1.rev()
+    ms_1.sort_insert_1()
     ms_1.printall()
