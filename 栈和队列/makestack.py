@@ -35,6 +35,9 @@ class SStack_from_list(object):
             raise StackUnderflow("in SStack_from_list.pop()")
         return self._elems.pop()
 
+    def depth(self):
+        return len(self._elems)
+
 
 class SStack_from_Linklist(object):
     """基于链表实现栈"""
