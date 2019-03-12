@@ -154,6 +154,11 @@ def midporder_element(t):
 函数顶替的重要技术在(下行循环)-内层循环.目标是找到下一个应该被访问到的节点,循环中用到一个条件表达式,要求在有左子树时持续左下行,没有左子树的
 时候向右切换.该循环的结束说明栈顶点没有左右子树,应该被访问.如果外层循环的一次迭代不进入内层循环,说明栈顶点的左右子树都已经便利完毕,应该访问
 栈顶点.
+
+要点:
+- 内层循环为了找当前子树的最左最下节点,将其入栈后种终止
+- 如果被访问的节点是其父节点的左节点,那么就需要遍历它的右节点
+- 如果被处理的节点是其中父节点的右节点,设置t=None退栈,迫使外层循环的下次迭代访问更上层的节点
 """
 
 
@@ -186,6 +191,31 @@ def posorder_elements(t):
             t = s.top().right
         else:
             t = None
+
+
+class BinTree(object):
+    """二叉树类"""
+
+    def __init__(self):
+        self._root = None
+
+    def is_empty(self):
+        return self._root is None
+
+    def leftchild(self):
+        return self._root.left
+
+    def rightchild(self):
+        return self._root.right
+
+    def set_root(self, rootnode):
+        self._root = rootnode
+
+    def set_left(self, leftchild):
+        self._root.left = leftchild
+
+    def set_right(self, rightchild):
+        self._root.right = rightchild
 
 
 if __name__ == '__main__':
